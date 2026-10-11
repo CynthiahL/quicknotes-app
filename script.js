@@ -63,7 +63,7 @@ function render(filteredNotes = notes) {
   updateCount();
 }
 
-// Update count message
+// Update count message (with category breakdown)
 function updateCount() {
   const count = notes.length;
   if (count === 0) {
@@ -72,6 +72,15 @@ function updateCount() {
     noteCount.textContent = 'You have 1 note.';
   } else {
     noteCount.textContent = `You have ${count} notes.`;
+  }
+
+  // Show category breakdown if notes exist
+  if (count > 0) {
+    const personalCount = notes.filter(n => n.category === 'personal').length;
+    const workCount = notes.filter(n => n.category === 'work').length;
+    const studyCount = notes.filter(n => n.category === 'study').length;
+
+    noteCount.textContent += ` (Personal: ${personalCount}, Work: ${workCount}, Study: ${studyCount})`;
   }
 }
 
@@ -85,11 +94,13 @@ function addNote(text, category) {
   render();
 }
 
-// Delete note
+// Delete note (with confirmation)
 function deleteNote(id) {
-  notes = notes.filter(note => note.id !== id);
-  saveNotes();
-  render();
+  if (confirm('Delete this note?')) {
+    notes = notes.filter(note => note.id !== id);
+    saveNotes();
+    render();
+  }
 }
 
 // Form submit
@@ -100,16 +111,27 @@ noteForm.addEventListener('submit', e => {
 
   if (text.length === 0) {
     errorMessage.textContent = 'Please type a note first.';
+    noteInput.classList.add('input-error');
     return;
   }
   if (text.length > 200) {
     errorMessage.textContent = 'Notes must be 200 characters or fewer.';
+    noteInput.classList.add('input-error');
     return;
   }
 
   errorMessage.textContent = '';
+  noteInput.classList.remove('input-error');
   addNote(text, category);
   noteInput.value = '';
+});
+
+// Clear error when user types again
+noteInput.addEventListener('input', () => {
+  if (errorMessage.textContent) {
+    errorMessage.textContent = '';
+    noteInput.classList.remove('input-error');
+  }
 });
 
 // Search
