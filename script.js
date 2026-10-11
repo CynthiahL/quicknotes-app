@@ -6,6 +6,7 @@ const notesList = document.querySelector('#notes-list');
 const noteCount = document.querySelector('#note-count');
 const errorMessage = document.querySelector('#error-message');
 const searchInput = document.querySelector('#search-input');
+const clearAllBtn = document.querySelector('#clear-all');
 
 // Notes array
 let notes = [];
@@ -74,7 +75,6 @@ function updateCount() {
     noteCount.textContent = `You have ${count} notes.`;
   }
 
-  // Show category breakdown if notes exist
   if (count > 0) {
     const personalCount = notes.filter(n => n.category === 'personal').length;
     const workCount = notes.filter(n => n.category === 'work').length;
@@ -141,6 +141,15 @@ searchInput.addEventListener('input', () => {
     note.text.toLowerCase().includes(query)
   );
   render(filtered);
+});
+
+// Clear all notes
+clearAllBtn.addEventListener('click', () => {
+  if (confirm('Delete all notes?')) {
+    notes = [];
+    saveNotes();
+    render();
+  }
 });
 
 // Initialize

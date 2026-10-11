@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Notes App</h1>
+    <p>Organize your thoughts and tasks</p>
+  </header>
+
+  <main>
+    <!-- Add a note section -->
+    <section>
+      <h2>Add a note</h2>
+      <form id="note-form">
+        <label for="note-input">Your note:</label>
+        <input type="text" id="note-input" name="note-input" maxlength="200" required>
+
+        <label for="note-category">Category:</label>
+        <select id="note-category" name="note-category">
+          <option value="personal">Personal</option>
+          <option value="work">Work</option>
+          <option value="study">Study</option>
+        </select>
+
+        <button type="submit">Add Note</button>
+      </form>
+      <p id="error-message"></p>
+    </section>
+
+    <!-- Your notes section -->
+    <section>
+      <h2>Your notes</h2>
+      <input type="text" id="search-input" placeholder="Search notes...">
+      <p id="note-count">You have no notes yet.</p>
+      <ul id="notes-list"></ul>
+      <button id="clear-all">Clear All Notes</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Notes App</p>
+  </footer>
+</body>
+</html>
